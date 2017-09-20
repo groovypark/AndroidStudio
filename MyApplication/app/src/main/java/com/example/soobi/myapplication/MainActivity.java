@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         final Button btnEqual = (Button) findViewById(R.id.btnEqual);
 
         final TextView textView = (TextView) findViewById(R.id.textView);
+
+        Stack stack = new Stack(50);
 
         final Map<String, String> calc = new HashMap<String, String>();
         calc.put("reset", "N");
@@ -125,3 +128,39 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
+//배열스택
+class Stack {
+    private int top;
+    private int maxSize;
+    private Object[] stackArray;
+
+    //생성자
+    public Stack(int maxSize){
+        this.maxSize = maxSize;
+        this.stackArray = new Object[maxSize];
+        this.top = -1;
+    }
+
+    //비어있는지 확인
+    public boolean empty(){
+        return (top == -1);
+    }
+
+    //데이터 삽입
+    public void push(Object item){
+        stackArray[++top] = item;
+    }
+
+    //top 데이터 반환
+    public Object peek(){
+        return stackArray[top];
+    }
+
+    //top 데이터 제거
+    public Object pop(){
+        Object item = peek();
+        top--;
+        return item;
+    }
+
+}

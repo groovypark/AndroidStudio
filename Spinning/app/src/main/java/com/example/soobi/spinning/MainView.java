@@ -17,6 +17,14 @@ public class MainView extends View{
     int screenHeight;
     int circleWidth;
 
+    int[] weight = {1,3,2,4};
+    String[] label = {"가","나","다","라"};
+    int[] colorList = {Color.GREEN, Color.YELLOW, Color.MAGENTA, Color.LTGRAY};
+
+    int weightTot = 0;
+    float unitAngle = 0;
+    int lastangle = 0;
+
     public MainView(Context context) {
         super(context);
         intVariables(context);
@@ -59,15 +67,28 @@ public class MainView extends View{
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        for (int i=0; i<weight.length; i++) {
+            weightTot += weight[i];
+        }
+
+        unitAngle = 360/weightTot;
+
         Paint paint = new Paint();
 
-        paint.setColor(Color.CYAN);
-        canvas.drawArc(0,0,circleWidth,circleWidth,0,45,true,paint);
-        paint.setColor(Color.MAGENTA);
-        canvas.drawArc(0,0,circleWidth,circleWidth,45,90,true,paint);
-        paint.setColor(Color.BLUE);
-        canvas.drawArc(0,0,circleWidth,circleWidth,135,125,true,paint);
-        paint.setColor(Color.LTGRAY);
-        canvas.drawArc(0,0,circleWidth,circleWidth,260,100,true,paint);
+       for(int i=0; i<weight.length; i++) {
+           paint.setColor(colorList[i]);
+           float angle = unitAngle*weight[i];
+           canvas.drawArc(0,0,circleWidth,circleWidth,lastangle,angle,true,paint);
+
+           paint.setColor(Color.BLACK);
+           paint.setTextSize(50);
+           canvas.save();
+           canvas.rotate(lastangle+angle/2+paint.getTextSize()/10,circleWidth/2,circleWidth/2);
+           paint.setTextAlign(Paint.Align.CENTER);
+           canvas.drawText(label[i],circleWidth/5*4,circleWidth/2,paint);
+           canvas.restore();
+
+           lastangle += angle;
+       }
     }
 }

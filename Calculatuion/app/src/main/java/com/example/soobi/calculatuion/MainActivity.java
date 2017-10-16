@@ -1,129 +1,162 @@
 package com.example.soobi.calculatuion;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
+import java.util.Stack;
+import java.util.StringTokenizer;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
+    int num = 0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ((Button) findViewById(R.id.Button1)).setOnClickListener(numClick);
+        ((Button) findViewById(R.id.Button2)).setOnClickListener(numClick);
+        ((Button) findViewById(R.id.Button3)).setOnClickListener(numClick);
+        ((Button) findViewById(R.id.Button4)).setOnClickListener(numClick);
+        ((Button) findViewById(R.id.Button5)).setOnClickListener(numClick);
+        ((Button) findViewById(R.id.Button6)).setOnClickListener(numClick);
+        ((Button) findViewById(R.id.Button7)).setOnClickListener(numClick);
+        ((Button) findViewById(R.id.Button8)).setOnClickListener(numClick);
+        ((Button) findViewById(R.id.Button9)).setOnClickListener(numClick);
+        ((Button) findViewById(R.id.Button0)).setOnClickListener(numClick);
+        ((Button) findViewById(R.id.plus)).setOnClickListener(numClick);
+        ((Button) findViewById(R.id.minus)).setOnClickListener(numClick);
+        ((Button) findViewById(R.id.mul)).setOnClickListener(numClick);
+        ((Button) findViewById(R.id.div)).setOnClickListener(numClick);
+        ((Button) findViewById(R.id.result)).setOnClickListener(numClick);
+        ((Button) findViewById(R.id.open)).setOnClickListener(numClick);
+        ((Button) findViewById(R.id.close)).setOnClickListener(numClick);
+        ((Button) findViewById(R.id.del)).setOnClickListener(numClick);
+
+        ((Button) findViewById(R.id.clear)).setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                EditText et = ((EditText) findViewById(R.id.EditText));
+                et.setText("0");
+            }
+        });
     }
 
-    public void onButtonClicked(View v) {
-        List<String> stringList = new ArrayList<String>();
-        String text = ((EditText) findViewById(R.id.editText)).getText().toString();
-        String number = "";
+    private View.OnClickListener numClick = new View.OnClickListener() {
+        public void onClick(View v) {
+            // TODO Auto-generated method stub
+            String id = null;
+            String s = "";
+            EditText et = ((EditText) findViewById(R.id.EditText));
+            if (et.getText().toString().charAt(0) == '0') et.setText("");
 
-        for (int i = 0; i < text.length(); i++) {
-            if (Character.isDigit(text.charAt(i))) {
-                number = number + text.charAt(i);
-            } else {
-                if (!number.isEmpty()) {
-                    stringList.add(number);
-                }
-                number = "";
-                stringList.add(text.charAt(i) + "");
+            switch (v.getId()) {
+                case R.id.Button0:
+                    id = "0";
+                    break;
+                case R.id.Button1:
+                    id = "1";
+                    break;
+                case R.id.Button2:
+                    id = "2";
+                    break;
+                case R.id.Button3:
+                    id = "3";
+                    break;
+                case R.id.Button4:
+                    id = "4";
+                    break;
+                case R.id.Button5:
+                    id = "5";
+                    break;
+                case R.id.Button6:
+                    id = "6";
+                    break;
+                case R.id.Button7:
+                    id = "7";
+                    break;
+                case R.id.Button8:
+                    id = "8";
+                    break;
+                case R.id.Button9:
+                    id = "9";
+                    break;
+                case R.id.plus:
+                    id = "+";
+                    break;
+                case R.id.minus:
+                    id = "-";
+                    break;
+                case R.id.mul:
+                    id = "*";
+                    break;
+                case R.id.div:
+                    id = "/";
+                    break;
+                case R.id.result:
+                    s = et.getText() + " = " + Calc(et.getText().toString());
+                    et.setText(s);
+                    return;
+                case R.id.open:
+                    id = "(";
+                    break;
+                case R.id.close:
+                    id = ")";
+                    break;
+                case R.id.del:
+                    s = et.getText().toString().substring(0, et.length()-1);
+                    et.setText(s);
+                    return;
+                default:
+                    break;
             }
+
+            s = et.getText() + id;
+            et.setText(s);
         }
-        if (!number.isEmpty()){
-            stringList.add(number);
+    };
+
+    private String Calc(String str) {
+        if (str.indexOf('(') != -1) {
+            int fs = str.indexOf('(');
+            int ls = str.lastIndexOf(')');
+            String s = Calc(str.substring(fs + 1, ls));
+            str = str.substring(0, fs) + s + str.substring(ls + 1, str.length());
         }
 
-        int start = 0;
-        int end = stringList.size()-1;
+        int cnt = 0;
+        Stack<Integer> Stk_Num = new Stack<Integer>();
+        StringTokenizer ST_Num = new StringTokenizer(str, "+-/* ");
+        StringTokenizer ST_Oper = new StringTokenizer(str, "1234567890 ");
 
-        for (int i=0; i<stringList.size(); i++) {
-            if (stringList.get(i).equals("(")) {
-                start = i;
-            }
-        }
-        for (int i=start; i<stringList.size(); i++) {
-            if(stringList.get(i).equals(")")) {
-                end = i;
-                break;
-            }
-        }
+        Stk_Num.push(Integer.parseInt(ST_Num.nextToken()));
+        while (ST_Num.hasMoreTokens()) {
+            char oper = ST_Oper.nextToken().charAt(0);
+            String num = ST_Num.nextToken();
+            int a;
 
-        int mul = -1;
-        int dev = -1;
-        int plus = -1;
-        int minus = -1;
-
-        for (int i=end; i>start; i--) {
-            if(stringList.get(i).equals("+")){
-                plus = i;
-            }
-            else if(stringList.get(i).equals("-")){
-                minus = i;
-            }
-            else if(stringList.get(i).equals("*")){
-                mul = i;
-            }
-            else if(stringList.get(i).equals("/")){
-                dev = i;
-            }
-        }
-        int top = -1;
-        if (plus != -1) {
-            top = plus;
-        }
-        if (minus != -1) {
-            top = minus;
-        }
-        if (mul != -1) {
-            top = mul;
-        }
-        if (dev != -1) {
-            top = dev;
-        }
-        if (top == -1) {
-            if ((stringList.get(start).equals("(")) && (stringList.get(end).endsWith(")"))) {
-                stringList.set(start,"");
-                stringList.set(end,"");
-                text="";
-                for (int i=0; i<stringList.size(); i++) {
-                    if (!stringList.get(i).isEmpty()) {
-                        text = text + stringList.get(i);
-                    }
-                }
-                ((EditText) findViewById(R.id.editText)).setText(text);
-                return;
+            if (oper == '*') {
+                a = Stk_Num.pop();
+                a *= Integer.parseInt(num);
+                Stk_Num.push(a);
+            } else if (oper == '/') {
+                a = Stk_Num.pop();
+                a /= Integer.parseInt(num);
+                Stk_Num.push(a);
+            } else if (oper == '+') {
+                Stk_Num.push(Integer.parseInt(num));
+            } else if (oper == '-') {
+                Stk_Num.push(-1 * (Integer.parseInt(num)));
             }
         }
 
-        int num1 = Integer.parseInt(stringList.get(top-1).toString());
-        int num2 = Integer.parseInt(stringList.get(top+1).toString());
-        int result = 0;
-        if (stringList.get(top).equals("+")) {
-            result = num1 + num2;
+        while (!Stk_Num.isEmpty()) {
+            cnt += Stk_Num.pop();
         }
-        if (stringList.get(top).equals("-")) {
-            result = num1 - num2;
-        }
-        if (stringList.get(top).equals("*")) {
-            result = num1 * num2;
-        }
-        if (stringList.get(top).equals("/")) {
-            result = num1 / num2;
-        }
-        stringList.set(top-1,result+"");
-        stringList.set(top,"");
-        stringList.set(top+1,"");
 
-        text = "";
-        for (int i=0; i<stringList.size(); i++) {
-            if(!stringList.get(i).isEmpty()) {
-                text = text + stringList.get(i);
-            }
-        }
-        ((EditText) findViewById(R.id.editText)).setText(text);
+        return Integer.toString(cnt);
     }
 }

@@ -78,4 +78,9 @@ public class ImageManager {
         }
         return retBmp;
     }
+
+    public void setImage(Bitmap bmp, int row, int col){
+        //Bitmap 조각을 (row,col)좌표로 이동
+        mSlicedImage[row][col] = bmp;
+    }
 }

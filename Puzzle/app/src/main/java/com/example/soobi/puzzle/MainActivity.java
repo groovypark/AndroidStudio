@@ -9,19 +9,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-    public final static int IMAGE_ROW = 3;
-    public final static int IMAGE_COL = 3;
-    public final static int IMAGE_BLANK_X = 2;
-    public final static int IMAGE_BLANK_Y = 2;
+//    public static int IMAGE_ROW = 1;
+//    public static int IMAGE_COL = 1;
+//    public static int IMAGE_BLANK_X = 0;
+//    public static int IMAGE_BLANK_Y = 0;
 
     ImageManager mImageManager;
     Button mShuffleButton;
+    RadioButton btn3;
+    RadioButton btn7;
+
+    //라디오버튼 선택되었을 때 행열설정
 
     //전역 변수 선언
     JigsqwView[][] mArrJigsawView = new JigsqwView[IMAGE_ROW][IMAGE_COL];
@@ -130,9 +135,33 @@ public class MainActivity extends AppCompatActivity {
         //Imagemanager 객체 생성(Context, Img, Row, Col, Blank_x, Blank_y)
         mImageManager = new ImageManager(this, R.drawable.background_525x525, IMAGE_ROW, IMAGE_COL, IMAGE_BLANK_X, IMAGE_BLANK_Y);
 
-        createArrJigsawView();
+        btn3 = (Button)findViewById(R.id.button3);
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IMAGE_ROW = 3;
+                IMAGE_COL = 3;
+                IMAGE_BLANK_X = 2;
+                IMAGE_BLANK_Y = 2;
+                createArrJigsawView();
 
-        drawTableLayout();
+                drawTableLayout();
+            }
+        });
+
+        btn7 = (Button)findViewById(R.id.button7);
+        btn7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IMAGE_ROW = 7;
+                IMAGE_COL = 7;
+                IMAGE_BLANK_X = 6;
+                IMAGE_BLANK_Y = 6;
+                createArrJigsawView();
+
+                drawTableLayout();
+            }
+        });
     }
 
     private void drawTableLayout() {

@@ -35,15 +35,52 @@ public class MainActivity extends AppCompatActivity {
                 //obj: 선택된 퍼즐조각
                 JigsqwView jv = (JigsqwView)msg.obj;
 
+                int touched_i=-1;
+                int touched_j=-1;
+                int move_i=-1;
+                int move_j=-1;
+
                 //터치된 퍼즐 조각의 좌표 파악(touched j:행, touched i:열)
+                for (int i = 0; i < IMAGE_ROW; i++) {
+                    for (int j = 0; j < IMAGE_COL; j++) {
+                        if (mArrJigsawView[i][j].getImageView()==jv.getImageView()){
+                            touched_i=i;
+                            touched_j=j;
+                        }
+                    }
+                }
 
                 //위가 비었으면
+                if (touched_i>0 && mArrJigsawView[touched_i-1][touched_j].getBlankState()==JigsqwView.BLANK){
+                    move_i = touched_i-1;
+                    move_j = touched_j;
+                    changeLocation(touched_i,touched_j,move_i,move_j);
+                    drawTableLayout();
+                }
 
                 //아래가 비었으면
+                if (touched_i<2 && mArrJigsawView[touched_i+1][touched_j].getBlankState()==JigsqwView.BLANK){
+                    move_i = touched_i+1;
+                    move_j = touched_j;
+                    changeLocation(touched_i,touched_j,move_i,move_j);
+                    drawTableLayout();
+                }
 
                 //왼쪽이 비었으면
+                if (touched_j>0 && mArrJigsawView[touched_i][touched_j-1].getBlankState()==JigsqwView.BLANK){
+                    move_i = touched_i;
+                    move_j = touched_j-1;
+                    changeLocation(touched_i,touched_j,move_i,move_j);
+                    drawTableLayout();
+                }
 
                 //오른쪽이 비었으면
+                if (touched_j<2 && mArrJigsawView[touched_i][touched_j+1].getBlankState()==JigsqwView.BLANK){
+                    move_i = touched_i;
+                    move_j = touched_j+1;
+                    changeLocation(touched_i,touched_j,move_i,move_j);
+                    drawTableLayout();
+                }
 
             }
         }

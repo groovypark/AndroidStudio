@@ -8,6 +8,34 @@
     tools:context="com.example.soobi.puzzle.MainActivity"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.80"
+                android:checked="true"
+                android:text="3 x 3" />
+
+            <RadioButton
+                android:id="@+id/button7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.79"
+                android:text="7 x 7" />
+
+        </RadioGroup>
+    </LinearLayout>
+
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"

@@ -20,6 +20,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -37,7 +38,11 @@ public class MainActivity extends AppCompatActivity {
     SQLiteDatabase sqlDB;
     LineChart lineChart;
 
-    ArrayList<Entry> entries = new ArrayList<>();
+    ArrayList<Entry> arrAge = new ArrayList<>();
+    ArrayList<Entry> arrWeight = new ArrayList<>();
+    ArrayList<Entry> arrPulse = new ArrayList<>();
+    ArrayList<Entry> arrExercise = new ArrayList<>();
+    List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,7 +153,11 @@ public class MainActivity extends AppCompatActivity {
                 String strExercises = "운동" + "\r\n" + "--------" + "\r\n";
 
                 Float index = 0f;
-                Float age;
+                Float age, weight, pulse, exercise;
+                arrAge.clear();
+                arrWeight.clear();
+                arrPulse.clear();
+                arrExercise.clear();
                 while (cursor.moveToNext()){
                     strDays += cursor.getString(0) + "\r\n";
                     strNames += cursor.getString(1) + "\r\n";
@@ -158,7 +167,17 @@ public class MainActivity extends AppCompatActivity {
                     strExercises += cursor.getString(5) + "\r\n";
 
                     age = cursor.getFloat(2);
-                    entries.add(new Entry(index, age));
+                    arrAge.add(new Entry(index, age));
+
+                    weight = cursor.getFloat(3);
+                    arrWeight.add(new Entry(index, weight));
+
+                    pulse = cursor.getFloat(4);
+                    arrPulse.add(new Entry(index, pulse));
+
+                    exercise = cursor.getFloat(5);
+                    arrExercise.add(new Entry(index, exercise));
+
                     index = index + 1f;
                 }
 
@@ -169,13 +188,24 @@ public class MainActivity extends AppCompatActivity {
                 edtPulseResult.setText(strPulses);
                 edtExerciseResult.setText(strExercises);
 
-                LineDataSet dataset = new LineDataSet(entries, "# of Calls");
+                LineDataSet setAge = new LineDataSet(arrAge, "Age");
+                LineDataSet setWeight = new LineDataSet(arrWeight, "Weight");
+                LineDataSet setPulse = new LineDataSet(arrPulse, "Pulse");
+                LineDataSet setExercise = new LineDataSet(arrExercise, "Exercise");
 
-                LineData data = new LineData(dataset);
-
-                dataset.setColors(ColorTemplate.COLORFUL_COLORS); //
+                setAge.setColors(ColorTemplate.rgb("#FF0000"));
+                setWeight.setColors(ColorTemplate.rgb("#FFBF00"));
+                setPulse.setColor(ColorTemplate.rgb("#00CC44"));
+                setPulse.setColor(ColorTemplate.rgb("#002BC6"));
                 /*dataset.setDrawCubic(true); //선 둥글게 만들기
                 dataset.setDrawFilled(true); //그래프 밑부분 색칠*/
+
+                dataSets.add(setAge);
+                dataSets.add(setWeight);
+                dataSets.add(setPulse);
+                dataSets.add(setExercise);
+
+                LineData data = new LineData(dataSets);
 
                 lineChart.setData(data);
                 lineChart.animateX(5000);

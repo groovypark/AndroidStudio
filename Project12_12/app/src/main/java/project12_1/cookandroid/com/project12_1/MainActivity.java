@@ -11,6 +11,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.R.attr.entries;
+import static project12_1.cookandroid.com.project12_1.R.id.chart;
+
 public class MainActivity extends AppCompatActivity {
 
     myDBHelper myHelper;
@@ -18,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
     EditText edtDayResult, edtNameResult, edtAgeResult, edtWeightResult, edtPulseResult, edtExerciseResult;
     Button btnInit, btnInsert, btnSelect, btnUpdate, btnDelete;
     SQLiteDatabase sqlDB;
+    LineChart lineChart;
 
+    ArrayList<Entry> entries = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +63,47 @@ public class MainActivity extends AppCompatActivity {
         btnSelect = (Button)findViewById(R.id.btnSelect);
         btnUpdate = (Button)findViewById(R.id.btnUpdate);
         btnDelete = (Button)findViewById(R.id.btnDelete);
+
+        lineChart = (LineChart) findViewById(R.id.chart);
+
+//        ArrayList<Entry> entries = new ArrayList<>();
+//        entries.add(new Entry(0f, 10f));
+//        entries.add(new Entry(1f, 1f));
+//        entries.add(new Entry(2f, 2f));
+//        entries.add(new Entry(3f, 3f));
+//        entries.add(new Entry(4f, 4f));
+//        entries.add(new Entry(5f, 5f));
+//        entries.add(new Entry(6f, 6f));
+//        entries.add(new Entry(7f, 7f));
+//        entries.add(new Entry(8f, 8f));
+//        entries.add(new Entry(9f, 10f));
+//        entries.add(new Entry(10f, 11f));
+
+//        LineDataSet dataset = new LineDataSet(entries, "# of Calls");
+//
+//        ArrayList<String> labels = new ArrayList<String>();
+//        labels.add("January");
+//        labels.add("February");
+//        labels.add("March");
+//        labels.add("April");
+//        labels.add("May");
+//        labels.add("June");
+//        labels.add("July");
+//        labels.add("August");
+//        labels.add("September");
+//        labels.add("October");
+//        labels.add("November");
+//        labels.add("December");
+
+//        LineData data = new LineData(dataset);
+
+//        dataset.setColors(ColorTemplate.COLORFUL_COLORS); //
+//        /*dataset.setDrawCubic(true); //선 둥글게 만들기
+//        dataset.setDrawFilled(true); //그래프 밑부분 색칠*/
+//
+//        lineChart.setData(data);
+//        lineChart.animateX(5000);
+
 
         myHelper = new myDBHelper(this);
         btnInit.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +147,8 @@ public class MainActivity extends AppCompatActivity {
                 String strPulses = "혈압" + "\r\n" + "--------" + "\r\n";
                 String strExercises = "운동" + "\r\n" + "--------" + "\r\n";
 
+                Float index = 0f;
+                Float age;
                 while (cursor.moveToNext()){
                     strDays += cursor.getString(0) + "\r\n";
                     strNames += cursor.getString(1) + "\r\n";
@@ -94,6 +156,10 @@ public class MainActivity extends AppCompatActivity {
                     strWeights += cursor.getString(3) + "\r\n";
                     strPulses += cursor.getString(4) + "\r\n";
                     strExercises += cursor.getString(5) + "\r\n";
+
+                    age = cursor.getFloat(2);
+                    entries.add(new Entry(index, age));
+                    index = index + 1f;
                 }
 
                 edtDayResult.setText(strDays);
@@ -103,8 +169,16 @@ public class MainActivity extends AppCompatActivity {
                 edtPulseResult.setText(strPulses);
                 edtExerciseResult.setText(strExercises);
 
-//                edtNameResult.setText(strNames);
-//                edtNumberResult.setText(strNumbers);
+                LineDataSet dataset = new LineDataSet(entries, "# of Calls");
+
+                LineData data = new LineData(dataset);
+
+                dataset.setColors(ColorTemplate.COLORFUL_COLORS); //
+                /*dataset.setDrawCubic(true); //선 둥글게 만들기
+                dataset.setDrawFilled(true); //그래프 밑부분 색칠*/
+
+                lineChart.setData(data);
+                lineChart.animateX(5000);
 
                 cursor.close();
                 sqlDB.close();

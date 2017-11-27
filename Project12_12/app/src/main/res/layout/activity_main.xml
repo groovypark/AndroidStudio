@@ -18,11 +18,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="fill_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_height="0dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -31,18 +32,18 @@
                     android:textSize="20dp" />
 
                 <EditText
+                    android:id="@+id/edtDay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:id="@+id/edtDay" />
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="fill_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_height="0dp" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -51,17 +52,17 @@
                     android:textSize="20dp" />
 
                 <EditText
+                    android:id="@+id/edtName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:id="@+id/edtName" />
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="fill_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_height="0dp" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -70,17 +71,17 @@
                     android:textSize="20dp" />
 
                 <EditText
+                    android:id="@+id/edtAge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:id="@+id/edtAge" />
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="fill_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_height="0dp" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -89,17 +90,17 @@
                     android:textSize="20dp" />
 
                 <EditText
+                    android:id="@+id/edtWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:id="@+id/edtWeight" />
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="fill_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_height="0dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -108,17 +109,17 @@
                     android:textSize="20dp" />
 
                 <EditText
+                    android:id="@+id/edtPulse"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:id="@+id/edtPulse" />
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="fill_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_height="0dp" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -127,105 +128,109 @@
                     android:textSize="20dp" />
 
                 <EditText
+                    android:id="@+id/edtExercise"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:id="@+id/edtExercise" />
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_weight="1"
                 android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
                 android:weightSum="1">
 
                 <Button
+                    android:id="@+id/btnInit"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:text="초기화"
-                    android:id="@+id/btnInit" />
+                    android:text="초기화" />
 
                 <Button
+                    android:id="@+id/btnInsert"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:text="입력"
-                    android:id="@+id/btnInsert" />
+                    android:text="입력" />
 
                 <Button
+                    android:id="@+id/btnUpdate"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:text="수정"
-                    android:id="@+id/btnUpdate" />
+                    android:text="수정" />
 
                 <Button
+                    android:id="@+id/btnDelete"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:text="삭제"
-                    android:id="@+id/btnDelete" />
+                    android:text="삭제" />
 
                 <Button
+                    android:id="@+id/btnSelect"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:text="조회"
-                    android:id="@+id/btnSelect" />
+                    android:text="조회" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_weight="5.38">
+                android:layout_weight="5.38"
+                android:orientation="horizontal">
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="260dp"
                     android:id="@+id/edtDayResult"
-                    android:layout_weight="0.19"
-                    android:background="#00FF00"
-                    android:padding="20dp"/>
-
-                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="260dp"
+                    android:layout_weight="0.19"
+                    android:background="#00FF00"
+                    android:padding="20dp" />
+
+                <EditText
                     android:id="@+id/edtNameResult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="260dp"
                     android:layout_weight="0.19"
                     android:background="#00FF00"
                     android:padding="20dp" />
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="260dp"
                     android:id="@+id/edtAgeResult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="260dp"
                     android:layout_weight="0.19"
                     android:background="#00FF00"
                     android:padding="20dp" />
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="260dp"
                     android:id="@+id/edtWeightResult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="260dp"
                     android:layout_weight="0.19"
                     android:background="#00FF00"
                     android:padding="20dp" />
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="260dp"
                     android:id="@+id/edtPulseResult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="260dp"
                     android:layout_weight="0.19"
                     android:background="#00FF00"
                     android:padding="20dp" />
 
                 <EditText
+                    android:id="@+id/edtExerciseResult"
                     android:layout_width="wrap_content"
                     android:layout_height="260dp"
-                    android:id="@+id/edtExerciseResult"
+                    android:layout_weight="0.15"
                     android:background="#00FF00"
-                    android:padding="20dp"
-                    android:layout_weight="0.15" />
+                    android:padding="20dp" />
             </LinearLayout>
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart"
+                android:layout_width="400dp"
+                android:layout_height="400dp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
